@@ -1,6 +1,6 @@
-# Quinty V2 - Decentralized Work & Funding Platform
+# Bouncccer - Decentralized Work & Funding Platform
 
-**Quinty V2** is a comprehensive on-chain task bounty and funding ecosystem built for the Base network. It combines multiple funding models (bounties, grants, crowdfunding, VC funding) with a reputation system and soulbound NFT badges to create a complete decentralized work platform.
+**Bouncccer** is a comprehensive on-chain task bounty and funding ecosystem built for the Base network. It combines multiple funding models (bounties, grants, crowdfunding, VC funding) with a reputation system and soulbound NFT badges to create a complete decentralized work platform.
 
 ## Features
 
@@ -36,9 +36,9 @@
 
 | Contract | Purpose | Features |
 |----------|---------|----------|
-| **Quinty.sol** | Core bounty system | ETH escrow, team submissions, oprec, slashing |
-| **QuintyReputation.sol** | Achievement tracking | Soulbound NFTs, seasons, milestones |
-| **QuintyNFT.sol** | Badge system | 7 badge types, soulbound, authorization |
+| **Bouncccer.sol** | Core bounty system | ETH escrow, team submissions, oprec, slashing |
+| **BouncccerReputation.sol** | Achievement tracking | Soulbound NFTs, seasons, milestones |
+| **BouncccerNFT.sol** | Badge system | 7 badge types, soulbound, authorization |
 | **DisputeResolver.sol** | Voting system | Weighted voting, rewards (coming soon) |
 | **AirdropBounty.sol** | Promotion tasks | Fixed rewards, verifier system |
 | **GrantProgram.sol** | Institutional grants | Application-based, selective approval |
@@ -67,7 +67,7 @@ npx hardhat compile
 npx hardhat test
 
 # Run specific test file
-npx hardhat test test/Quinty.test.ts
+npx hardhat test test/Bouncccer.test.ts
 ```
 
 ### Deploy
@@ -98,13 +98,13 @@ PRIVATE_KEY=your_private_key_here
 ### Contract Dependencies
 
 ```
-Quinty (Core)
-├── → QuintyReputation (reputation updates)
+Bouncccer (Core)
+├── → BouncccerReputation (reputation updates)
 ├── → DisputeResolver (slash funds)
-└── → QuintyNFT (mint badges)
+└── → BouncccerNFT (mint badges)
 
-QuintyNFT (Badges)
-├── ← Quinty (authorized)
+BouncccerNFT (Badges)
+├── ← Bouncccer (authorized)
 ├── ← GrantProgram (authorized)
 ├── ← LookingForGrant (authorized)
 └── ← Crowdfunding (authorized)
@@ -204,10 +204,10 @@ Create Grant → Applications → Selective Approval → Claim Funds → Complet
 npx hardhat test
 
 # Core bounty tests (21 tests)
-npx hardhat test test/Quinty.test.ts
+npx hardhat test test/Bouncccer.test.ts
 
 # Oprec & team tests (9 tests)
-npx hardhat test test/QuintyOprec.test.ts
+npx hardhat test test/BouncccerOprec.test.ts
 
 # Airdrop tests (26 tests)
 npx hardhat test test/AirdropBounty.test.ts
@@ -219,7 +219,7 @@ npx hardhat test test/GrantProgram.test.ts
 npx hardhat test test/Crowdfunding.test.ts
 
 # NFT badge tests
-npx hardhat test test/QuintyNFT.test.ts
+npx hardhat test test/BouncccerNFT.test.ts
 ```
 
 ## Security
@@ -261,13 +261,13 @@ npx hardhat run scripts/export-abis.ts
 
 ```typescript
 import { ethers } from 'ethers';
-import QuintyABI from './abis/Quinty.json';
+import BouncccerABI from './abis/Bouncccer.json';
 
 const provider = new ethers.JsonRpcProvider("https://sepolia.base.org");
-const quinty = new ethers.Contract(QUINTY_ADDRESS, QuintyABI.abi, provider);
+const bouncccer = new ethers.Contract(BOUNCCCER_ADDRESS, BouncccerABI.abi, provider);
 
 // Create a bounty
-const tx = await quinty.createBounty(
+const tx = await bouncccer.createBounty(
   "Build a DeFi dashboard",
   deadline,
   false, // single winner
@@ -289,10 +289,10 @@ See [FINAL_SUMMARY.md](./FINAL_SUMMARY.md) for deployed contract addresses.
 
 ### Deployment Order
 
-1. QuintyReputation
-2. Quinty
+1. BouncccerReputation
+2. Bouncccer
 3. DisputeResolver
-4. QuintyNFT
+4. BouncccerNFT
 5. AirdropBounty
 6. SocialVerification
 7. GrantProgram
@@ -303,13 +303,13 @@ See [FINAL_SUMMARY.md](./FINAL_SUMMARY.md) for deployed contract addresses.
 
 ```bash
 # Set contract addresses
-quinty.setAddresses(reputation, dispute, nft)
+bouncccer.setAddresses(reputation, dispute, nft)
 
 # Transfer ownership
-reputation.transferOwnership(quinty)
+reputation.transferOwnership(bouncccer)
 
 # Authorize minters
-nft.authorizeMinter(quinty)
+nft.authorizeMinter(bouncccer)
 nft.authorizeMinter(grantProgram)
 nft.authorizeMinter(lookingForGrant)
 nft.authorizeMinter(crowdfunding)
@@ -325,11 +325,11 @@ nft.authorizeMinter(crowdfunding)
 ## Project Structure
 
 ```
-sc-quinty/
+sc-bouncccer/
 ├── contracts/              # 9 Solidity smart contracts
-│   ├── Quinty.sol
-│   ├── QuintyReputation.sol
-│   ├── QuintyNFT.sol
+│   ├── Bouncccer.sol
+│   ├── BouncccerReputation.sol
+│   ├── BouncccerNFT.sol
 │   ├── DisputeResolver.sol
 │   ├── AirdropBounty.sol
 │   ├── SocialVerification.sol
