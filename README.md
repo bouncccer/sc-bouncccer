@@ -1,6 +1,6 @@
-# Bouncccer - Decentralized Work & Funding Platform
+# Bouncccer - Decentralized Bounty Platform
 
-**Bouncccer** is a comprehensive on-chain task bounty and funding ecosystem built for the Base network. It combines multiple funding models (bounties, grants, crowdfunding, VC funding) with a reputation system and soulbound NFT badges to create a complete decentralized work platform.
+**Bouncccer** is a comprehensive on-chain task bounty ecosystem built for the Base network. It combines a robust bounty system with a reputation system and soulbound NFT badges to create a trusted decentralized work platform.
 
 ## Features
 
@@ -12,13 +12,6 @@
 - **Oprec (Open Recruitment)**: Optional pre-bounty application phase for curated participants
 - **Automatic Slashing**: 25-50% penalty on expired bounties with community voting
 
-### Funding Models
-
-1. **Bounties** - Task-based rewards with escrow and winner selection
-2. **Grant Programs** - Institutional grant distribution with application-based selection
-3. **Crowdfunding** - All-or-nothing campaigns with milestone-based fund release
-4. **Looking For Grant** - Flexible VC/investor funding without all-or-nothing constraints
-
 ### Reputation & Achievements
 
 - **Soulbound NFT Badges**: Non-transferable achievement NFTs for ecosystem participation
@@ -26,25 +19,14 @@
 - **Monthly Seasons**: Compete for top solver and top creator badges
 - **Dynamic Metadata**: Custom IPFS images and on-chain SVG generation
 
-### Social Verification
-
-- **X/Twitter Verification**: Link wallet addresses to social accounts on-chain
-- **Institution Verification**: Special verification for organizations
-- **Manual & Automated**: Ready for ZK proof integration (Reclaim Protocol compatible)
-
 ## Smart Contracts
 
 | Contract | Purpose | Features |
 |----------|---------|----------|
 | **Bouncccer.sol** | Core bounty system | ETH escrow, team submissions, oprec, slashing |
 | **BouncccerReputation.sol** | Achievement tracking | Soulbound NFTs, seasons, milestones |
-| **BouncccerNFT.sol** | Badge system | 7 badge types, soulbound, authorization |
-| **DisputeResolver.sol** | Voting system | Weighted voting, rewards (coming soon) |
-| **AirdropBounty.sol** | Promotion tasks | Fixed rewards, verifier system |
-| **GrantProgram.sol** | Institutional grants | Application-based, selective approval |
-| **Crowdfunding.sol** | All-or-nothing | Milestone-based, refunds |
-| **LookingForGrant.sol** | VC funding | Flexible, no deadlines required |
-| **SocialVerification.sol** | Social proof | X/Twitter linking, institution verification |
+| **BouncccerNFT.sol** | Badge system | Soulbound, authorization |
+| **DisputeResolver.sol** | Voting system | Weighted voting, slashing resolution |
 
 ## Quick Start
 
@@ -105,9 +87,6 @@ Bouncccer (Core)
 
 BouncccerNFT (Badges)
 ├── ← Bouncccer (authorized)
-├── ← GrantProgram (authorized)
-├── ← LookingForGrant (authorized)
-└── ← Crowdfunding (authorized)
 ```
 
 ### Key Flows
@@ -128,12 +107,6 @@ Team Leader Submits → Equal Split (Leader + Members) → Team Member Badges �
 
 ```
 Deadline Passes → triggerSlash() → 25-50% to DisputeResolver → Refund Remainder → Community Vote
-```
-
-#### 4. Grant Distribution
-
-```
-Create Grant → Applications → Selective Approval → Claim Funds → Completion
 ```
 
 ## Network Information
@@ -157,10 +130,6 @@ Create Grant → Applications → Selective Approval → Claim Funds → Complet
 | 0 | BountyCreator | Minted when creating bounties |
 | 1 | BountySolver | For bounty participation |
 | 2 | TeamMember | For team-based bounty wins |
-| 3 | GrantGiver | For creating grant programs |
-| 4 | GrantRecipient | For receiving grants |
-| 5 | CrowdfundingDonor | For contributing to campaigns |
-| 6 | LookingForGrantSupporter | For VC/investor support |
 
 ## Achievement Milestones
 
@@ -209,15 +178,6 @@ npx hardhat test test/Bouncccer.test.ts
 # Oprec & team tests (9 tests)
 npx hardhat test test/BouncccerOprec.test.ts
 
-# Airdrop tests (26 tests)
-npx hardhat test test/AirdropBounty.test.ts
-
-# Grant program tests
-npx hardhat test test/GrantProgram.test.ts
-
-# Crowdfunding tests
-npx hardhat test test/Crowdfunding.test.ts
-
 # NFT badge tests
 npx hardhat test test/BouncccerNFT.test.ts
 ```
@@ -242,12 +202,10 @@ npx hardhat test test/BouncccerNFT.test.ts
 
 | Operation | Estimated Gas |
 |-----------|--------------|
-| Deploy all contracts | ~35M gas |
+| Deploy all contracts | ~15M gas |
 | Create bounty | ~200k gas |
 | Submit solution | ~150k gas |
 | Select winners | ~100k gas |
-| Create grant | ~180k gas |
-| Create campaign | ~250k gas |
 
 ## Frontend Integration
 
@@ -293,11 +251,6 @@ See [FINAL_SUMMARY.md](./FINAL_SUMMARY.md) for deployed contract addresses.
 2. Bouncccer
 3. DisputeResolver
 4. BouncccerNFT
-5. AirdropBounty
-6. SocialVerification
-7. GrantProgram
-8. LookingForGrant
-9. Crowdfunding
 
 ### Post-Deployment Setup
 
@@ -310,9 +263,6 @@ reputation.transferOwnership(bouncccer)
 
 # Authorize minters
 nft.authorizeMinter(bouncccer)
-nft.authorizeMinter(grantProgram)
-nft.authorizeMinter(lookingForGrant)
-nft.authorizeMinter(crowdfunding)
 ```
 
 ## Documentation
@@ -326,17 +276,12 @@ nft.authorizeMinter(crowdfunding)
 
 ```
 sc-bouncccer/
-├── contracts/              # 9 Solidity smart contracts
+├── contracts/              # 4 Solidity smart contracts
 │   ├── Bouncccer.sol
 │   ├── BouncccerReputation.sol
 │   ├── BouncccerNFT.sol
 │   ├── DisputeResolver.sol
-│   ├── AirdropBounty.sol
-│   ├── SocialVerification.sol
-│   ├── GrantProgram.sol
-│   ├── LookingForGrant.sol
-│   └── Crowdfunding.sol
-├── test/                  # 9 test files, 68 tests
+├── test/                  # Test files
 ├── scripts/               # Deployment scripts
 │   ├── deploy.ts
 │   ├── setup-contracts.ts
